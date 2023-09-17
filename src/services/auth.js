@@ -1,5 +1,6 @@
 import { auth } from "../config/Firebase";
 import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
+import { postRequest } from "./request";
 
 class AuthService {
     constructor() {
@@ -14,7 +15,10 @@ class AuthService {
                 const user = result.user;
                 if (user) {
                     user.getIdToken().then((tkn) => {
+                        console.log(tkn)
                         sessionStorage.setItem("accessToken", tkn);
+
+                        postRequest("API/v1/Auth", {})
 
                         this.isAuthenticated = true;
                         this.username = user.email;
@@ -38,6 +42,21 @@ class AuthService {
         await new Promise((r) => setTimeout(r, 500)); // Simulate delay
         this.isAuthenticated = false;
         this.username = "";
+    }
+
+    async getUser() {
+
+        const user = getAuth().currentUser;
+
+        if (user) {
+            user.getIdToken().then((tkn) => {
+                sessionStorage.setItem("accessToken", tkn);
+
+                this.isAuthenticated = true;
+                this.username = user.email;
+            })
+        }
+        return user;
     }
 }
 

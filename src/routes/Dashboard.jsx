@@ -11,7 +11,15 @@ function DashboardLoader({ request }) {
 }
 
 function Dashboard() {
-  return <h3>Protected</h3>;
+  return (
+    <>
+    <h3>Protected</h3>
+    <hr/>
+    {
+      JSON.stringify(authService.user)
+    }
+    </>
+  );
 }
 
 export { Dashboard, DashboardLoader}

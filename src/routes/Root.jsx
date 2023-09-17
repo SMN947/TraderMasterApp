@@ -1,9 +1,11 @@
 import { Link, Outlet, useFetcher, useRouteLoaderData, } from "react-router-dom";
-  
+import { getRequest } from "../services/request";
+import { useEffect } from "react";
+
   function Root() {
     return (
       <div>
-        <h1>Auth Example using RouterProvider</h1>
+        <h1>SMN947 TraderMaster</h1>
   
         <AuthStatus />
   
@@ -22,6 +24,15 @@ import { Link, Outlet, useFetcher, useRouteLoaderData, } from "react-router-dom"
   }
   
   function AuthStatus() {
+    useEffect(()=>{
+      getRequest('API/v1/User/').then((res) => {
+        console.log(res);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+    },[])
+
     // Get our logged in user, if they exist, from the root route loader data
     let { user } = useRouteLoaderData("root");
     let fetcher = useFetcher();

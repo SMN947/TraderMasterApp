@@ -28,7 +28,7 @@ function LoginPage() {
     let params = new URLSearchParams(location.search);
     let from = params.get("from") || "/";
 
-    let navigation = useNavigation();
+    // let navigation = useNavigation();
     let isLoggingIn = authService.formData?.get("username") != null;
 
     let actionData = useActionData();
